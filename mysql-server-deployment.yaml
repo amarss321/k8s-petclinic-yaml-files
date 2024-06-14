@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-server
+  labels:
+    app: mysql-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-server
+  template:
+    metadata:
+      labels:
+        app: mysql-server
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: petclinic
+            - name: MYSQL_ROOT_PASSWORD
+              value: petclinic
+          image: mysql:5.7.8
+          name: mysql-server
+          ports:
+            - containerPort: 3306
+          resources: {}
+      restartPolicy: Always
